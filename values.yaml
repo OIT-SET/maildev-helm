@@ -1,4 +1,3 @@
----
 # -- Provide a name in place of `maildev`
 nameOverride: ""
 
@@ -13,7 +12,7 @@ image:
   # -- image pull policy
   pullPolicy: Always
   # -- Overrides the image tag
-  tag: "2.0.5"
+  tag: "2.1.0"
 
 # -- If defined, uses a Secret to pull an image from a private Docker registry or repository.
 imagePullSecrets: []
@@ -22,10 +21,8 @@ imagePullSecrets: []
 podAnnotations: {}
 
 # -- pod-level security context
-podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  fsGroup: 2000
+podSecurityContext: {}
+# fsGroup: 2000
 
 # -- Number of replicas
 replicaCount: 1
@@ -34,30 +31,26 @@ replicaCount: 1
 revisionHistoryLimit: 10
 
 # -- Resource limits and requests for the controller pods.
-resources:
+resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  limits:                                               
-    cpu: 1000m
-    memory: 1Gi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+#   memory: 128Mi
 
 # -- container-level security context
-securityContext:
-  capabilities:
-    drop:
-      - ALL
-  readOnlyRootFilesystem: false
-  runAsNonRoot: true
-  runAsUser: 1000
-  allowPrivilegeEscalation: false
-  seccompProfile:
-    type: RuntimeDefault
-
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+# runAsUser: 1000
 
 serviceAccount:
   # -- Specifies whether a service account should be created
@@ -84,7 +77,7 @@ services:
 
 ingress:
   # -- Enable ingress record generation
-  enabled: true
+  enabled: false
   # -- IngressClass that will be be used to implement the Ingress
   className: ""
   # -- Additional annotations for the Ingress resource
@@ -95,20 +88,15 @@ ingress:
   # -- An array with hosts and paths
   # @default -- see [values.yaml](./values.yaml)
   hosts:
-    - host: maildev-chent1.ais-user.kube.ohio.edu
+    - host: chart-example.local
       paths:
         - path: /
           pathType: ImplementationSpecific
-          backend:
-            service:
-              name: cad-maildev-smtp-web
-              port:
-                number: 1080
   # -- An array with the tls configuration
-  tls:
-    - secretName: kube-ohio-edu
-      hosts:
-        - maildev-chent1.ais-user.kube.ohio.edu
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
 
 autoscaling:
   # -- Enable Horizontal POD autoscaling
@@ -149,9 +137,9 @@ maildev:
     mailDirectory: "/home/node/maildev-data"
     modes:
       # -- Run maildev in silent mode to disable the startup messages
-      silent: false
+      silent: true
       # -- Run maildev in verbose mode
-      verbose: true
+      verbose: false
     smtp:
       # -- Comma separated list of SMTP extensions to NOT advertise (SMTPUTF8, PIPELINING, 8BITMIME)
       hideExtensions: ""
@@ -170,13 +158,13 @@ maildev:
           mail: ""
           # -- The additional configuration for what email addresses you would like to allow or deny.
           rules: []
-            #             [
-            #               { "allow": "*" }
+            # [
+            #   { "allow": "*" },
             #   { "deny": "*@test.com" },
             #   { "allow": "ok@test.com" },
             #   { "deny": "*@utah.com" },
-          #   { "allow": "johnny@utah.com" }
-        #             ]
+            #   { "allow": "johnny@utah.com" }
+          # ]
         # -- Name of an existing secret containing the password for the outgoing SMTP mail. If set `maildev.config.smtp.outgoing.password` will be ignored. Key needs to be `smtp-outgoing-password`.
         existingSecret: ""
         # -- SMTP host for outgoing mail
@@ -200,20 +188,19 @@ maildev:
       username: ""
   persistence:
     # -- Use a PVC to persist data
-    enabled: true
+    enabled: false
     # -- The desired access modes the volume should have.
     accessModes:
       - ReadWriteOnce
     # -- Annotations to be added to the PersistentVolumeClaim
-    annotations:
-      helm.sh/resource-policy: keep
+    annotations: {}
     # To clean some old mails when persistence is enabled
     cron:
       # -- Enable the creation of a cronjob to periodically delete old emails
-      enabled: true
+      enabled: false
       config:
         # -- How old emails may be before they get deleted
-        daysToKeep: 1
+        daysToKeep: 15
         # -- The schedule on which the cronjob should run
         schedule: "0 1 * * *"
       image:
@@ -228,8 +215,8 @@ maildev:
     # -- Provide an existing PersistentVolumeClaim
     existingClaim: ""
     # -- Name of the StorageClass required by the claim.
-    storageClassName: "ohio-rwo-block-distributed"
+    storageClassName: ""
     # -- Represents the minimum and maximum resources the volume should have.
     resources:
       requests:
-        storage: 10Gi
+        storage: 2Gi
