@@ -35,7 +35,7 @@ spec:
                 - "-type"
                 - "d"
                 - "-mtime"
-                - "+{{ .Values.maildev.persistence.cron.config.daysToKeep | default 2 }}"
+                - "+{{ .Values.maildev.persistence.cron.config.daysToKeep | default 1 }}"
                 - "-exec"
                 - "rm"
                 - "-rf"
