@@ -226,7 +226,7 @@
                                 "config": {
                                     "type": "object",
                                     "properties": {
-                                        "daysToKeep": {
+                                        "minutesToKeep": {
                                             "type": "integer"
                                         },
                                         "schedule": {

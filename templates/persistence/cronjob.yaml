@@ -23,7 +23,7 @@ spec:
                           - {{ .Release.Name }}
                   topologyKey: "kubernetes.io/hostname"
           containers:
-            - name: delete-mail
+            - name: delete-email-files
               image: "{{ .Values.maildev.persistence.cron.image.registry }}/{{ .Values.maildev.persistence.cron.image.repository }}:{{ .Values.maildev.persistence.cron.image.tag }}"
               imagePullPolicy: {{ .Values.maildev.persistence.cron.image.pullPolicy }}
               args:
@@ -31,11 +31,28 @@ spec:
                 - "{{ .Values.maildev.config.mailDirectory }}"
                 - "-type"
                 - "f"
-                - "-o"
+                - "-mmin"
+                - "+{{ .Values.maildev.persistence.cron.config.minutesToKeep | default 1440}}"
+                - "-exec"
+                - "rm"
+                - "-rf"
+                - "{}"
+                - ";"
+              volumeMounts:
+                - name: data
+                  mountPath: {{ .Values.maildev.config.mailDirectory | quote }}
+            - name: delete-email-folders
+              image: "{{ .Values.maildev.persistence.cron.image.registry }}/{{ .Values.maildev.persistence.cron.image.repository }}:{{ .Values.maildev.persistence.cron.image.tag }}"
+              imagePullPolicy: {{ .Values.maildev.persistence.cron.image.pullPolicy }}
+              args:
+                - "find"
+                - "{{ .Values.maildev.config.mailDirectory }}"
                 - "-type"
                 - "d"
-                - "-mtime"
-                - "+{{ .Values.maildev.persistence.cron.config.daysToKeep | default 1 }}"
+                - "-mmin"
+                - "+{{ .Values.maildev.persistence.cron.config.minutesToKeep | default 1440}}"
+                - "-mindepth"
+                - "1"
                 - "-exec"
                 - "rm"
                 - "-rf"

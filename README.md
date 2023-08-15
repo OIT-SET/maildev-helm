@@ -2,10 +2,12 @@
 
 MailDev is a simple way to test your emails during development with an easy to use web interface.
 
+This repo is based on the work from https://github.com/christianknell/helm-charts/tree/main/charts/maildev
+
 ## TL;DR;
 
 ```console
-helm repo add cad-maildev https://alluen.github.io/helm-charts
+helm repo add cad-maildev https://oit-set.github.io/maildev-helm
 helm repo update
 helm install my-release cad-maildev/maildev
 ```
@@ -32,7 +34,7 @@ MailDev also provides a Web interface, it can be disabled/enabled using `maildev
 To install the chart with the release name `my-release`:
 
 ```console
-helm repo add cad-maildev https://alluen.github.io/helm-charts
+helm repo add cad-maildev https://oit-set.github.io/maildev-helm
 helm repo update
 helm install my-release cad-maildev/maildev
 ```
@@ -144,7 +146,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | maildev.config.web.username                    | string | `""`                             | Username for the GUI                                                                                                                                                                            |
 | maildev.persistence.accessModes                | list   | `["ReadWriteOnce"]`              | The desired access modes the volume should have.                                                                                                                                                |
 | maildev.persistence.annotations                | object | `{}`                             | Annotations to be added to the PersistentVolumeClaim                                                                                                                                            |
-| maildev.persistence.cron.config.daysToKeep     | int    | `15`                             | How old emails may be before they get deleted                                                                                                                                                   |
+| maildev.persistence.cron.config.minutesToKeep     | int    | `1440`                             | How old emails may be before they get deleted                                                                                                                                                   |
 | maildev.persistence.cron.config.schedule       | string | `"0 1 * * *"`                    | The schedule on which the cronjob should run                                                                                                                                                    |
 | maildev.persistence.cron.enabled               | bool   | `false`                          | Enable the creation of a cronjob to periodically delete old emails                                                                                                                              |
 | maildev.persistence.cron.image.pullPolicy      | string | `"Always"`                       | Image pull policy                                                                                                                                                                               |

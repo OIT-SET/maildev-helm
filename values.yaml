@@ -40,7 +40,7 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
   # requests:
-  #   cpu: 100m
+#   cpu: 100m
 #   memory: 128Mi
 
 # -- container-level security context
@@ -49,7 +49,7 @@ securityContext: {}
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
+# runAsNonRoot: true
 # runAsUser: 1000
 
 serviceAccount:
@@ -83,7 +83,7 @@ ingress:
   # -- Additional annotations for the Ingress resource
   annotations: {}
     # cert-manager.io/cluster-issuer: cluster-issuer-name
-    # kubernetes.io/ingress.class: nginx
+  # kubernetes.io/ingress.class: nginx
   # kubernetes.io/tls-acme: "true"
   # -- An array with hosts and paths
   # @default -- see [values.yaml](./values.yaml)
@@ -163,7 +163,7 @@ maildev:
             #   { "deny": "*@test.com" },
             #   { "allow": "ok@test.com" },
             #   { "deny": "*@utah.com" },
-            #   { "allow": "johnny@utah.com" }
+          #   { "allow": "johnny@utah.com" }
           # ]
         # -- Name of an existing secret containing the password for the outgoing SMTP mail. If set `maildev.config.smtp.outgoing.password` will be ignored. Key needs to be `smtp-outgoing-password`.
         existingSecret: ""
@@ -200,7 +200,7 @@ maildev:
       enabled: false
       config:
         # -- How old emails may be before they get deleted
-        daysToKeep: 15
+        minutesToKeep: 1440
         # -- The schedule on which the cronjob should run
         schedule: "0 1 * * *"
       image:
