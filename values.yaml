@@ -186,6 +186,8 @@ maildev:
       password: ""
       # -- Username for the GUI
       username: ""
+    oauth2_proxy:
+      enabled: false
   persistence:
     # -- Use a PVC to persist data
     enabled: false
