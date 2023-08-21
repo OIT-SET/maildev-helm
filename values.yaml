@@ -77,7 +77,7 @@ services:
 
 ingress:
   # -- Enable ingress record generation
-  enabled: false
+  enabled: true
   # -- IngressClass that will be be used to implement the Ingress
   className: ""
   # -- Additional annotations for the Ingress resource
@@ -186,6 +186,8 @@ maildev:
       password: ""
       # -- Username for the GUI
       username: ""
+    oauth2_proxy:
+      enabled: false
   persistence:
     # -- Use a PVC to persist data
     enabled: false
