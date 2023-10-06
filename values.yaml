@@ -188,6 +188,7 @@ maildev:
       username: ""
     oauth2_proxy:
       enabled: false
+      allowed_groups: ""
   persistence:
     # -- Use a PVC to persist data
     enabled: false

@@ -211,6 +211,10 @@ spec:
                   key: oauth2_proxy_oidc_issuer_url
             - name: OAUTH2_PROXY_SESSION_COOKIE_MINIMAL
               value: "true"
+            - name: OAUTH2_PROXY_SCOPE
+              value: openid profile email
+            - name: OAUTH2_PROXY_ALLOWED_GROUPS
+              value: {{ .Values.maildev.config.oauth2_proxy.allowed_groups | quote }}              
           volumeMounts:
             - mountPath: /var/run/secrets/maildev-app-resource
               name: secrets-maildev-app-resource
