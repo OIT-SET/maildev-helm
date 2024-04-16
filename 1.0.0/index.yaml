@@ -18,11 +18,11 @@ entries:
             url: https://maildev.github.io/maildev/assets/img/original/maildev-dark.png
       apiVersion: v2
       appVersion: 2.1.0
-      created: "2023-10-06T14:38:18.525587-04:00"
+      
       description: MailDev is a simple way to test your emails during development with
         an easy to use web interface.
-      digest: bce00069a398ce5862a44b0348b652d9bd45f16bc951f419a276abb8ee7093bf
-      home: https://github.com/alluen/maildev-helm
+      home: https://github.com/OIT-SET/maildev-helm
+      
       maintainers:
         - email: chent1@ohio.edu
           name: chent1
@@ -32,8 +32,7 @@ entries:
         - https://github.com/maildev/maildev
         - https://hub.docker.com/r/maildev/maildev
       type: application
-      version: 1.0.2
+      version: 1.0.0
       urls:
-        - https://github.com/OIT-SET/maildev-helm/releases/download/maildev-1.0.2/maildev-1.0.2.tgz
-generated: "2023-10-06T14:38:18.525618-04:00"
-
+        - https://github.com/OIT-SET/maildev-helm/releases/download/maildev-1.0.0/maildev-1.0.0.tgz
+generated: "2023-08-02T15:10:08.192276-04:00"
