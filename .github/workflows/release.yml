@@ -26,4 +26,4 @@ jobs:
           packages_with_index: true
           pages_branch: gh-pages
         env:
-          CR_TOKEN: "${{ secrets.HELM_CR_TOKEN_CLASSIC }}"
+          CR_TOKEN: "${{ secrets.HELM_CR_TOKEN }}"
