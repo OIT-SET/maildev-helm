@@ -226,7 +226,7 @@
                                 "config": {
                                     "type": "object",
                                     "properties": {
-                                        "daysToKeep": {
+                                        "minutesToKeep": {
                                             "type": "integer"
                                         },
                                         "schedule": {
@@ -327,7 +327,7 @@
                     "type": "object",
                     "properties": {
                         "nodePort": {
-                            "type": "null"
+                            "type": "integer"
                         },
                         "port": {
                             "type": "integer"

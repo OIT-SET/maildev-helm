@@ -164,7 +164,92 @@ spec:
               mountPath: /etc/maildev
               subPath: auto-relay-rules.json
             {{- end }}
+        {{- if .Values.maildev.config.oauth2_proxy.enabled }}
+        - name: oauth2-proxy
+          image: quay.io/oauth2-proxy/oauth2-proxy:v7.4.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 4180
+          env:
+            - name: OAUTH2_PROXY_UPSTREAMS
+              value: "http://localhost:1080/"
+            - name: OAUTH2_PROXY_UPSTREAM_TIMEOUT
+              value: "300s"
+            - name: OAUTH2_PROXY_SKIP_AUTH_ROUTES
+              value: "/reloadMailsFromDirectory"
+            - name: OAUTH2_PROXY_SKIP_PROVIDER_BUTTON
+              value: "true"
+            - name: OAUTH2_PROXY_SILENCE_PING_LOGGING
+              value: "true"
+            - name: OAUTH2_PROXY_REVERSE_PROXY
+              value: "true"
+            - name: OAUTH2_PROXY_HTTP_ADDRESS
+              value: "0.0.0.0:4180"
+            - name: OAUTH2_PROXY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: maildev-app-resource
+                  key: oauth2_proxy_client_secret
+            - name: OAUTH2_PROXY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: maildev-app-resource
+                  key: oauth2_proxy_client_id
+            - name: OAUTH2_PROXY_COOKIE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: maildev-app-resource
+                  key: oauth2_proxy_cookie_secret
+            - name: OAUTH2_PROXY_EMAIL_DOMAINS
+              value: ohio.edu
+            - name: OAUTH2_PROXY_PROVIDER
+              value: oidc
+            - name: OAUTH2_PROXY_OIDC_ISSUER_URL
+              valueFrom:
+                secretKeyRef:
+                  name: oauth2-proxy-oidc-issuer-url
+                  key: oauth2_proxy_oidc_issuer_url
+            - name: OAUTH2_PROXY_SESSION_COOKIE_MINIMAL
+              value: "true"
+          volumeMounts:
+            - mountPath: /var/run/secrets/maildev-app-resource
+              name: secrets-maildev-app-resource
+              readOnly: true
+              
+          resources:
+            requests:
+              cpu: 5m
+              memory: 50Mi
+            limits:
+              cpu: 100m
+              memory: 250Mi
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 4180
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /ping
+              port: 4180
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 2
+        {{- end }}      
       volumes:
+        {{- if .Values.maildev.config.oauth2_proxy.enabled }}
+        - name: secrets-maildev-app-resource
+          secret: 
+            secretName: maildev-app-resource
+        {{- end }}    
         - name: data
           {{- if .Values.maildev.persistence.enabled }}
           persistentVolumeClaim:
