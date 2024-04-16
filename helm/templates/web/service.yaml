@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "maildev.web.serviceName" . }}
+  labels:
+    {{- include "maildev.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.services.web.type }}
+  ports:
+    - port: {{ .Values.services.web.port }}
+      {{- if .Values.maildev.config.oauth2_proxy.enabled }}
+      targetPort: 4180
+      {{- else }}
+      targetPort: web
+      {{- end }}
+      protocol: TCP
+      name: web
+  selector:
+    {{- include "maildev.selectorLabels" . | nindent 4 }}
