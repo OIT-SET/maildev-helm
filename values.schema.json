@@ -327,7 +327,7 @@
                     "type": "object",
                     "properties": {
                         "nodePort": {
-                            "type": "null"
+                            "type": "integer"
                         },
                         "port": {
                             "type": "integer"
