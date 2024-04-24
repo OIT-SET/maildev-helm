@@ -84,6 +84,17 @@ Get the name of the secret containing the web user password
 {{- end -}}
 
 {{/*
+Get the name of the secret containing the oauth2_proxy config & credentials
+*/}}
+{{- define "maildev.oauth2_proxy.secretName" -}}
+  {{- if .Values.maildev.config.oauth2_proxy.existingSecret -}}
+    {{- printf "%s" .Values.maildev.config.oauth2_proxy.existingSecret -}}
+  {{- else -}}
+      {{- printf "%s" (include "maildev.fullname" .) -}}-oauth2-proxy
+  {{- end -}}
+{{- end -}}
+
+{{/*
 Get the name of the secret containing the password for the incoming SMTP traffic
 */}}
 {{- define "maildev.smtp.incoming.secretName" -}}

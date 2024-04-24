@@ -139,6 +139,9 @@
                                 "incoming": {
                                     "type": "object",
                                     "properties": {
+                                        "authRequired": {
+                                            "type": "boolean"
+                                        },
                                         "existingSecret": {
                                             "type": "string"
                                         },
@@ -173,6 +176,9 @@
                                         "host": {
                                             "type": "string"
                                         },
+                                        "authRequired": {
+                                            "type": "boolean"
+                                        },
                                         "password": {
                                             "type": "string"
                                         },
@@ -195,6 +201,9 @@
                                 "disabled": {
                                     "type": "boolean"
                                 },
+                                "authRequired": {
+                                    "type": "boolean"
+                                },
                                 "existingSecret": {
                                     "type": "string"
                                 },
@@ -202,6 +211,29 @@
                                     "type": "string"
                                 },
                                 "username": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "oauth2_proxy": {
+                            "type": "object",
+                            "properties": {
+                                "clientId": {
+                                    "type": "string"
+                                },
+                                "clientSecret": {
+                                    "type": "string"
+                                },
+                                "cookieSecret": {
+                                    "type": "string"
+                                },
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "existingSecret": {
+                                    "type": "string"
+                                },
+                                "oidcIssuerURL": {
                                     "type": "string"
                                 }
                             }

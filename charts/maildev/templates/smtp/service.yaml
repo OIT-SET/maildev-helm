@@ -11,8 +11,10 @@ spec:
       targetPort: smtp
       protocol: TCP
       name: smtp
-      {{ if and (eq .Values.services.smtp.type "NodePort")  .Values.services.smtp.nodePort }}
-      nodePort:  {{ .Values.services.smtp.nodePort }}
-      {{ end }}
+      {{- if (eq .Values.services.smtp.type "NodePort") }}
+      {{- if .Values.services.smtp.nodePort }}
+      nodePort: {{ .Values.services.smtp.nodePort }}
+      {{- end }}
+      {{- end }}
   selector:
     {{- include "maildev.selectorLabels" . | nindent 4 }}
