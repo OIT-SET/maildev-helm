@@ -144,6 +144,8 @@ maildev:
       # -- Comma separated list of SMTP extensions to NOT advertise (SMTPUTF8, PIPELINING, 8BITMIME)
       hideExtensions: ""
       incoming:
+        # -- If authentication is required for SMTP incoming mail
+        authRequired: false
         # -- Name of an existing secret containing the password for the incoming SMTP mail. If set `maildev.config.smtp.incoming.password` will be ignored. Key needs to be `smtp-incoming-password`.
         existingSecret: ""
         # -- SMTP password for incoming mail
@@ -169,6 +171,8 @@ maildev:
         existingSecret: ""
         # -- SMTP host for outgoing mail
         host: ""
+        # -- If authentication is required for SMTP outgoing mail
+        authRequired: false
         # -- SMTP password for outgoing mail
         password: ""
         # -- SMTP port for outgoing mail
@@ -180,6 +184,8 @@ maildev:
     web:
       # -- Disable the use of the web interface. Useful for unit testing
       disabled: false
+      # -- If Authentication is required for the GUI
+      authRequired: false
       # -- Name of an existing secret containing the password for the GUI. If set `maildev.config.web.password` will be ignored. Key needs to be `web-password`.
       existingSecret: ""
       # -- Password for the GUI
@@ -187,7 +193,20 @@ maildev:
       # -- Username for the GUI
       username: ""
     oauth2_proxy:
+      # -- Enable OAuth2 Proxy for the web interface
       enabled: false
+      # -- Name of the existing secret containing the OAuth2 Proxy configuration. If set `maildev.config.oauth2_proxy.clientId`,
+      #    `maildev.config.oauth2_proxy.clientSecret`, `maildev.config.oauth2_proxy.cookieSecret`, `maildev.config.oauth2_proxy.oidcIssuerURL` will be ignored.
+      #    Keys in the secret need to be `oauth2_proxy_client_id`, `oauth2_proxy_client_secret`, `oauth2_proxy_cookie_secret`, `oauth2_proxy_oidc_issuer_url`.
+      existingSecret: ""
+      # -- clientId for OAuth2 Proxy
+      clientId: ""
+      # -- clientSecret for OAuth2 Proxy
+      clientSecret: ""
+      # -- cookieSecret for OAuth2 Proxy
+      cookieSecret: ""
+      # -- OIDC Issuer URL for OAuth2 Proxy
+      oidcIssuerURL: ""
   persistence:
     # -- Use a PVC to persist data
     enabled: false

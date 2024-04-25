@@ -61,8 +61,8 @@ spec:
             - "--verbose"
             {{- end }}
           env:
-            {{- if .Values.maildev.config.https.enabled }}
             # HTTPS Settings
+            {{- if .Values.maildev.config.https.enabled }}
             {{- if .Values.maildev.config.https.cert }}
             - name: MAILDEV_HTTPS_CERT
               value: {{ .Values.maildev.config.https.cert | quote }}
@@ -82,9 +82,11 @@ spec:
             - name: MAILDEV_HIDE_EXTENSIONS
               value: {{ .Values.maildev.config.smtp.hideExtensions | quote }}
             {{- end }}
+            {{- if .Values.maildev.config.smtp.incoming.authRequired }}
             {{- if .Values.maildev.config.smtp.incoming.username }}
             - name: MAILDEV_INCOMING_USER
               value: {{ .Values.maildev.config.smtp.incoming.username | quote }}
+            {{- end }}
             - name: MAILDEV_INCOMING_PASS
               valueFrom:
                 secretKeyRef:
@@ -99,23 +101,23 @@ spec:
             - name: MAILDEV_OUTGOING_PORT
               value: {{ .Values.maildev.config.smtp.outgoing.port | quote }}
             {{- end }}
-            {{- if .Values.maildev.config.smtp.outgoing.host }}
+            {{- if .Values.maildev.config.smtp.outgoing.authRequired }}
+            {{- if .Values.maildev.config.smtp.outgoing.username }}
+            - name: MAILDEV_OUTGOING_USER
+              value: {{ .Values.maildev.config.smtp.outgoing.username | quote }}
+            {{- end }}
             - name: MAILDEV_OUTGOING_PASS
               valueFrom:
                 secretKeyRef:
                   name: {{ include "maildev.smtp.outgoing.secretName" . }}
                   key: smtp-outgoing-password
             {{- end }}
-            {{- if .Values.maildev.config.smtp.outgoing.username }}
-            - name: MAILDEV_OUTGOING_USER
-              value: {{ .Values.maildev.config.smtp.outgoing.username | quote }}
-            {{- end }}
-            # Web Settingss
+            # Web Settings
+            {{- if .Values.maildev.config.web.authRequired }}
             {{- if .Values.maildev.config.web.username }}
             - name: MAILDEV_WEB_USER
               value: {{ .Values.maildev.config.web.username | quote }}
             {{- end }}
-            {{- if or .Values.maildev.config.web.password .Values.maildev.config.web.existingSecret }}
             - name: MAILDEV_WEB_PASS
               valueFrom:
                 secretKeyRef:
@@ -125,7 +127,7 @@ spec:
             - name: MAILDEV_WEB_PORT
               value: {{ .Values.services.web.port | quote }}
             {{- if .Values.extraEnv }}
-            ## Additional Setings
+            ## Additional Settings
             {{- range .Values.extraEnv }}
             {{- if and (.name) (.value) }}
             - name: {{ .name | quote }}
@@ -188,17 +190,17 @@ spec:
             - name: OAUTH2_PROXY_CLIENT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: maildev-app-resource
+                  name: {{ include "maildev.oauth2_proxy.secretName" . }}
                   key: oauth2_proxy_client_secret
             - name: OAUTH2_PROXY_CLIENT_ID
               valueFrom:
                 secretKeyRef:
-                  name: maildev-app-resource
+                  name: {{ include "maildev.oauth2_proxy.secretName" . }}
                   key: oauth2_proxy_client_id
             - name: OAUTH2_PROXY_COOKIE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: maildev-app-resource
+                  name: {{ include "maildev.oauth2_proxy.secretName" . }}
                   key: oauth2_proxy_cookie_secret
             - name: OAUTH2_PROXY_EMAIL_DOMAINS
               value: ohio.edu
@@ -207,15 +209,10 @@ spec:
             - name: OAUTH2_PROXY_OIDC_ISSUER_URL
               valueFrom:
                 secretKeyRef:
-                  name: oauth2-proxy-oidc-issuer-url
+                  name: {{ include "maildev.oauth2_proxy.secretName" . }}
                   key: oauth2_proxy_oidc_issuer_url
             - name: OAUTH2_PROXY_SESSION_COOKIE_MINIMAL
               value: "true"
-          volumeMounts:
-            - mountPath: /var/run/secrets/maildev-app-resource
-              name: secrets-maildev-app-resource
-              readOnly: true
-              
           resources:
             requests:
               cpu: 5m
@@ -245,11 +242,6 @@ spec:
             timeoutSeconds: 2
         {{- end }}      
       volumes:
-        {{- if .Values.maildev.config.oauth2_proxy.enabled }}
-        - name: secrets-maildev-app-resource
-          secret: 
-            secretName: maildev-app-resource
-        {{- end }}    
         - name: data
           {{- if .Values.maildev.persistence.enabled }}
           persistentVolumeClaim:
