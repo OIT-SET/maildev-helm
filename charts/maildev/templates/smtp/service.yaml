@@ -3,7 +3,11 @@ kind: Service
 metadata:
   name: {{ include "maildev.smtp.serviceName" . }}
   labels:
-    {{- include "maildev.labels" . | nindent 4 }}s
+    {{- include "maildev.labels" . | nindent 4 }}
+  {{- if .Values.services.smtp.annotations }}
+  annotations:
+    {{- toYaml .Values.services.smtp.annotations | nindent 4 }}
+  {{- end }}
 spec:
   type: {{ .Values.services.smtp.type }}
   ports:
@@ -11,10 +15,11 @@ spec:
       targetPort: smtp
       protocol: TCP
       name: smtp
-      {{- if (eq .Values.services.smtp.type "NodePort") }}
-      {{- if .Values.services.smtp.nodePort }}
+      {{- if and (eq .Values.services.smtp.type "NodePort") .Values.services.smtp.nodePort }}
       nodePort: {{ .Values.services.smtp.nodePort }}
       {{- end }}
-      {{- end }}
+  {{- if and (eq .Values.services.smtp.type "LoadBalancer") .Values.services.smtp.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.services.smtp.loadBalancerIP | quote }}
+  {{- end }}
   selector:
     {{- include "maildev.selectorLabels" . | nindent 4 }}

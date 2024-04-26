@@ -68,12 +68,16 @@ services:
     # -- Kubernetes port to use for the web GUI
     port: 1080
   smtp:
-    # -- Kubernetes service type for the SMTP server
+    # -- Kubernetes service type for the SMTP server. One of NodePort, LoadBalancer, or ClusterIP
     type: ClusterIP
     # -- Kubernetes port to use for the internal SMTP server
     port: 1025
     # -- You can set the node port for the external SMTP server that should be used or leave it blank to get a random node port. Only active if `services.smtp.type == NodePort`
-    nodePort:
+    nodePort: "" 
+    # -- Annotations to be added to the service
+    annotations: {}
+    # -- loadBalancerIP if services.smtp.type is LoadBalancer
+    loadBalancerIP: ""
 
 ingress:
   # -- Enable ingress record generation
