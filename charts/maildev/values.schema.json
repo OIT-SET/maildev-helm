@@ -359,13 +359,19 @@
                     "type": "object",
                     "properties": {
                         "nodePort": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "port": {
                             "type": "integer"
                         },
                         "type": {
                             "type": "string"
+                        },
+                        "loadBalancerIP": {
+                            "type": "string"
+                        },
+                        "annotations": {
+                            "type": "object"
                         }
                     }
                 },
