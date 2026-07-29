@@ -4,10 +4,10 @@ description: MailDev is a simple way to test your emails during development with
 type: application
 version: 1.1.2
 appVersion: "2.1.0"
-home: https://github.com/alluen/maildev-helm
+home: https://github.com/OIT-SET/maildev-helm
 maintainers:
-  - name: chent1
-    email: chent1@ohio.edu
+  - name: cooperm3
+    email: cooperm3@ohio.edu
 sources:
   - https://maildev.github.io/maildev
   - https://github.com/maildev/maildev
