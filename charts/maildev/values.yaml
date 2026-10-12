@@ -21,8 +21,14 @@ imagePullSecrets: []
 podAnnotations: {}
 
 # -- pod-level security context
-podSecurityContext: {}
-# fsGroup: 2000
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+  fsGroupChangePolicy: "OnRootMismatch"
+  seccompProfile:
+    type: RuntimeDefault
 
 # -- Number of replicas
 replicaCount: 1
@@ -44,13 +50,11 @@ resources: {}
 #   memory: 128Mi
 
 # -- container-level security context
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-# runAsNonRoot: true
-# runAsUser: 1000
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
 
 serviceAccount:
   # -- Specifies whether a service account should be created
