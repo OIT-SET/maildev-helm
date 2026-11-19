@@ -4,7 +4,7 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: changed
-          description: image version to 2.1.0
+          description: image version to 3.0.0
       artifacthub.io/screenshots: |
         - title: SMTP server & web interface for viewing and testing emails during development.
           url: https://maildev.github.io/maildev/assets/img/original/maildev-light.png
@@ -17,15 +17,15 @@ entries:
         - title: View your emails in an eye-friendly dark interface.
           url: https://maildev.github.io/maildev/assets/img/original/maildev-dark.png
     apiVersion: v2
-    appVersion: 2.1.0
-    created: "2023-08-02T15:10:08.192255-04:00"
+    appVersion: 3.0.0
+    created: "2026-11-19T14:45:19.715281-05:00"
     description: MailDev is a simple way to test your emails during development with
       an easy to use web interface.
-    digest: d92ad13afe25606eb4aed45fbfdabb9caaf3093a3b552ee206b45746f3e6ed9d
-    home: https://github.com/alluen/maildev-helm
+    digest: 09f97034a96f14e1371920716bc6f9a5957f0bbc8da3bb58f0f4420a4891182c
+    home: https://github.com/OIT-SET/maildev-helm
     maintainers:
-    - email: chent1@ohio.edu
-      name: chent1
+    - email: cooperm3@ohio.edu
+      name: cooperm3
     name: maildev
     sources:
     - https://maildev.github.io/maildev
@@ -33,6 +33,6 @@ entries:
     - https://hub.docker.com/r/maildev/maildev
     type: application
     urls:
-    - maildev-1.0.0.tgz
-    version: 1.0.0
-generated: "2023-08-02T15:10:08.192276-04:00"
+    - maildev-1.2.0.tgz
+    version: 1.2.0
+generated: "2026-11-19T14:45:19.714344-05:00"
