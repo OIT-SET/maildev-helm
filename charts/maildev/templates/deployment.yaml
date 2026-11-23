@@ -144,11 +144,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /healthz
+              path: /api/healthz
               port: web
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: /api/healthz
               port: web
           {{- with .Values.resources }}
           resources:
