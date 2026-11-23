@@ -33,6 +33,6 @@ entries:
     - https://hub.docker.com/r/maildev/maildev
     type: application
     urls:
-    - maildev-1.2.0.tgz
-    version: 1.2.0
+    - maildev-1.2.1.tgz
+    version: 1.2.1
 generated: "2026-11-19T14:45:19.714344-05:00"
