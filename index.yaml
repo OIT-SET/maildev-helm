@@ -4,6 +4,40 @@ entries:
   - annotations:
       artifacthub.io/changes: |
         - kind: changed
+          description: image version to 3.0.0
+      artifacthub.io/screenshots: |
+        - title: SMTP server & web interface for viewing and testing emails during development.
+          url: https://maildev.github.io/maildev/assets/img/original/maildev-light.png
+        - title: Resizable viewport to test your emails at different sizes.
+          url: https://maildev.github.io/maildev/assets/img/original/responsive.png
+        - title: View email HTML, plain text, headers or raw source.
+          url: https://maildev.github.io/maildev/assets/img/original/formats.png
+        - title: Convenient search feature to quickly find any email.
+          url: https://maildev.github.io/maildev/assets/img/original/search.png
+        - title: View your emails in an eye-friendly dark interface.
+          url: https://maildev.github.io/maildev/assets/img/original/maildev-dark.png
+    apiVersion: v2
+    appVersion: 3.0.0
+    created: "2026-11-23T14:02:27.038830849Z"
+    description: MailDev is a simple way to test your emails during development with
+      an easy to use web interface.
+    digest: 8e0cf758a149c5d3f78b354cf974e69bb5d1ec8cb354b3f6f71868fb2c656617
+    home: https://github.com/OIT-SET/maildev-helm
+    maintainers:
+    - email: cooperm3@ohio.edu
+      name: cooperm3
+    name: maildev
+    sources:
+    - https://maildev.github.io/maildev
+    - https://github.com/maildev/maildev
+    - https://hub.docker.com/r/maildev/maildev
+    type: application
+    urls:
+    - maildev-1.2.0.tgz
+    version: 1.2.0
+  - annotations:
+      artifacthub.io/changes: |
+        - kind: changed
           description: image version to 2.1.0
       artifacthub.io/screenshots: |
         - title: SMTP server & web interface for viewing and testing emails during development.
@@ -205,4 +239,4 @@ entries:
     urls:
     - https://github.com/OIT-SET/maildev-helm/releases/download/maildev-1.0.2/maildev-1.0.2.tgz
     version: 1.0.2
-generated: "2026-11-17T13:51:05.74015954Z"
+generated: "2026-11-23T14:02:27.038866863Z"
