@@ -64,7 +64,7 @@ spec:
             - name: reload-mail
               image: "{{ .Values.maildev.persistence.cron.image.registry }}/{{ .Values.maildev.persistence.cron.image.repository }}:{{ .Values.maildev.persistence.cron.image.tag }}"
               imagePullPolicy: {{ .Values.maildev.persistence.cron.image.pullPolicy }}
-              args: ["wget","http://{{ include "maildev.fullname" . }}-web:{{ .Values.services.web.port}}/reloadMailsFromDirectory"]
+              args: ["wget","http://{{ include "maildev.fullname" . }}-web:{{ .Values.services.web.port}}/api/reloadMailsFromDirectory"]
           volumes:
             - name: data
               persistentVolumeClaim:
