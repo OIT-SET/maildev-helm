@@ -12,6 +12,10 @@ spec:
     spec:
       template:
         spec:
+          {{- with .Values.podSecurityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           affinity:
             podAffinity:
               requiredDuringSchedulingIgnoredDuringExecution:
